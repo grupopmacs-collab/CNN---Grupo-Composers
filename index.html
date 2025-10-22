@@ -1,22 +1,33 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Predicción de Rutas - Composers</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Infografía - Sistema de Detección de Fraude</title>
     <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #333;
+            color: var(--light);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         .container {
@@ -25,764 +36,733 @@
             padding: 20px;
         }
 
-        .header {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        header {
             text-align: center;
-            border: 3px solid #4CAF50;
-        }
-
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .team-member {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 10px;
-            border-left: 4px solid #4CAF50;
-        }
-
-        .phase {
-            background: rgba(255, 255, 255, 0.95);
+            padding: 40px 0;
+            background: rgba(44, 62, 80, 0.9);
             border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 25px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-            border-left: 5px solid;
-        }
-
-        .phase:hover {
-            transform: translateY(-5px);
-        }
-
-        .phase-1 { border-left-color: #FF6B6B; }
-        .phase-2 { border-left-color: #4ECDC4; }
-        .phase-3 { border-left-color: #45B7D1; }
-        .phase-4 { border-left-color: #96CEB4; }
-        .phase-5 { border-left-color: #FFEAA7; }
-        .phase-6 { border-left-color: #DDA0DD; }
-
-        .phase-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .phase-icon {
-            font-size: 2em;
-            margin-right: 15px;
-        }
-
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .metric-card {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-        }
-
-        .architecture {
-            background: #2c3e50;
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-            font-family: 'Courier New', monospace;
-        }
-
-        .layer {
-            margin: 10px 0;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
-        }
-
-        .visualization {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        .chart-container {
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             position: relative;
-            height: 300px;
-            margin: 20px 0;
-        }
-
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 15px 0;
-            background: white;
-            border-radius: 10px;
             overflow: hidden;
         }
 
-        .data-table th, .data-table td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--secondary), var(--accent));
         }
 
-        .data-table th {
-            background: #4CAF50;
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+
+        .team {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .member {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 15px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .section {
+            background: rgba(44, 62, 80, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--secondary), var(--accent));
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+        }
+
+        h2 i {
+            margin-right: 10px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .card h3 {
+            color: var(--secondary);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .card h3 i {
+            margin-right: 10px;
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .metric-value {
+            font-weight: bold;
+            color: var(--success);
+        }
+
+        .architecture {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .model-visual {
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .layer {
+            position: absolute;
+            height: 40px;
+            background: var(--secondary);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: white;
+            font-weight: bold;
+            transition: all 0.3s;
         }
 
-        .data-table tr:hover {
-            background: #f5f5f5;
+        .layer:hover {
+            background: var(--accent);
+            transform: scale(1.05);
         }
 
-        .prediction-example {
-            background: #e8f5e8;
+        .demo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .upload-area {
+            width: 100%;
+            max-width: 500px;
+            height: 200px;
+            border: 3px dashed var(--secondary);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .upload-area:hover {
+            background: rgba(52, 152, 219, 0.1);
+        }
+
+        .upload-area i {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+
+        .result {
+            width: 100%;
+            max-width: 500px;
             padding: 20px;
             border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            text-align: center;
+            display: none;
+        }
+
+        .result.fraud {
+            background: rgba(231, 76, 60, 0.2);
+            border: 2px solid var(--accent);
+        }
+
+        .result.legit {
+            background: rgba(46, 204, 113, 0.2);
+            border: 2px solid var(--success);
+        }
+
+        .result h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .probability-bar {
+            width: 100%;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
             margin: 15px 0;
-            border-left: 4px solid #4CAF50;
+            overflow: hidden;
+        }
+
+        .probability-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success), var(--accent));
+            border-radius: 10px;
+            transition: width 1s ease-in-out;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 40px auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background: var(--secondary);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-content {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--accent);
+            border: 4px solid var(--secondary);
+            border-radius: 50%;
+            top: 20px;
+            z-index: 1;
+        }
+
+        .timeline-item:nth-child(odd)::after {
+            right: -10px;
+        }
+
+        .timeline-item:nth-child(even)::after {
+            left: -10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 50px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .tech-stack {
             display: flex;
+            justify-content: center;
             flex-wrap: wrap;
-            gap: 10px;
-            margin: 15px 0;
-        }
-
-        .tech-tag {
-            background: #e3f2fd;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9em;
-            border: 1px solid #bbdefb;
-        }
-
-        .results-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+            gap: 15px;
             margin: 20px 0;
         }
 
-        .result-card {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .progress-bar {
-            background: #e0e0e0;
-            border-radius: 10px;
-            height: 20px;
-            margin: 10px 0;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            border-radius: 10px;
-            transition: width 1s ease-in-out;
-        }
-
-        .mae { background: #4CAF50; width: 92%; }
-        .rmse { background: #2196F3; width: 88%; }
-        .r2 { background: #FF9800; width: 89%; }
-        .mape { background: #9C27B0; width: 92%; }
-
-        .feature-importance {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 10px;
-            margin: 15px 0;
-        }
-
-        .feature-bar {
-            background: #e0e0e0;
-            border-radius: 5px;
-            height: 25px;
-            margin: 5px 0;
-            position: relative;
-        }
-
-        .feature-fill {
-            background: linear-gradient(90deg, #4CAF50, #45a049);
-            height: 100%;
-            border-radius: 5px;
-            transition: width 1s ease-in-out;
-        }
-
-        .feature-label {
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: white;
-            font-weight: bold;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        .tech-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         @media (max-width: 768px) {
-            .team-grid {
-                grid-template-columns: 1fr;
+            h1 {
+                font-size: 2.2rem;
             }
-            
-            .metrics-grid {
-                grid-template-columns: 1fr;
+
+            .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .timeline::after {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+
+            .timeline-item::after {
+                left: 21px;
+            }
+
+            .timeline-item:nth-child(odd)::after,
+            .timeline-item:nth-child(even)::after {
+                left: 21px;
             }
         }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(52, 152, 219, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(52, 152, 219, 0);
+            }
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .phase-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
     <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <h1>🚗 GRUPO: COMPOSERS</h1>
-            <p>Sistema Inteligente de Predicción de Tiempos de Viaje usando Redes Neuronales MLP</p>
-            
-            <div class="team-grid">
-                <div class="team-member">Challco Ccohuanqui Samir Junior (100%)</div>
-                <div class="team-member">Huaychi Sencia José Natividad (100%)</div>
-                <div class="team-member">Tejada Taco Francys Raúl (100%)</div>
-                <div class="team-member">Lizarraga Aliaga Alexis Joaquin (100%)</div>
-                <div class="team-member">Zavala Huacarpuma Juan Aldair (100%)</div>
-            </div>
-        </div>
+        <header>
+            <h1>Composers</h1>
+            <div class="subtitle">Sistema de Detección de Fraude con Redes Neuronales Convolucionales</div>
 
-        <!-- Fase 1 -->
-        <div class="phase phase-1">
-            <div class="phase-header">
-                <div class="phase-icon">🎯</div>
-                <h2>FASE 1: COMPRENSIÓN DEL NEGOCIO</h2>
+            <div class="team">
+                <div class="member">Lizarraga Aliaga Alexis Joaquin</div>
+                <div class="member">Huaychi Sencia José Natividad</div>
+                <div class="member">Challco Ccohuanqui Samir Junior</div>
+                <div class="member">Tejada Taco Francys Raul</div>
+                <div class="member">Zavala Huacarpuma Juan Aldair</div>
             </div>
-            
-            <h3>Objetivos Principales</h3>
-            <ul>
-                <li>🔹 Reducir tiempos de viaje entre punto A y B</li>
-                <li>🔹 Optimizar selección de rutas en tiempo real</li>
-                <li>🔹 Mejorar experiencia de usuarios en aplicaciones de navegación</li>
-                <li>🔹 Minimizar impacto de congestión vehicular</li>
-            </ul>
+        </header>
 
-            <h3>Métricas de Éxito</h3>
-            <div class="metrics-grid">
-                <div class="metric-card">
-                    <h4>⏱️ Tiempo de Predicción</h4>
-                    <p>&lt; 3 minutos</p>
+        <section class="section">
+            <h2><i class="fas fa-chart-line"></i> Resumen del Proyecto</h2>
+            <p>Desarrollamos un sistema de detección de fraude en transacciones utilizando Redes Neuronales
+                Convolucionales (CNN) que analiza imágenes de comprobantes para identificar patrones sospechosos. El
+                modelo fue entrenado con el dataset MNIST adaptado para simular transacciones legítimas y fraudulentas.
+            </p>
+
+            <div class="grid">
+                <div class="card">
+                    <h3><i class="fas fa-bullseye"></i> Objetivo</h3>
+                    <p>Crear un sistema capaz de detectar transacciones fraudulentas en tiempo real con alta precisión,
+                        minimizando los falsos positivos que afectan la experiencia del usuario.</p>
                 </div>
-                <div class="metric-card">
-                    <h4>🎯 Precisión</h4>
-                    <p>&gt; 85%</p>
+
+                <div class="card">
+                    <h3><i class="fas fa-cogs"></i> Metodología</h3>
+                    <p>Implementamos el proceso CRISP-DM para el desarrollo del modelo, incluyendo comprensión del
+                        negocio, preparación de datos, modelado con CNN, evaluación y despliegue.</p>
                 </div>
-                <div class="metric-card">
-                    <h4>📊 Error Promedio</h4>
-                    <p>&lt; 10%</p>
+
+                <div class="card">
+                    <h3><i class="fas fa-rocket"></i> Resultados</h3>
+                    <p>El modelo alcanzó una precisión del 97.4% en validación, con un AUC de 0.9958, superando los
+                        criterios de éxito establecidos para el proyecto.</p>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Fase 2 -->
-        <div class="phase phase-2">
-            <div class="phase-header">
-                <div class="phase-icon">🔍</div>
-                <h2>FASE 2: COMPRENSIÓN DE DATOS</h2>
-            </div>
-            
-            <h3>Dataset Uber/Lyft - Características Analizadas</h3>
-            <div class="tech-stack">
-                <span class="tech-tag">distance</span>
-                <span class="tech-tag">price</span>
-                <span class="tech-tag">hour</span>
-                <span class="tech-tag">day</span>
-                <span class="tech-tag">source_lat</span>
-                <span class="tech-tag">dest_lat</span>
-                <span class="tech-tag">temperature</span>
-                <span class="tech-tag">rain</span>
-            </div>
+        <section class="section">
+            <h2><i class="fas fa-network-wired"></i> Arquitectura del Modelo</h2>
+            <p>Nuestra CNN utiliza una arquitectura optimizada para la detección de patrones en imágenes de
+                transacciones:</p>
 
-            <h3>Análisis Exploratorio - Hallazgos Clave</h3>
-            <div class="results-grid">
-                <div class="result-card">
-                    <h4>📈 Distribución de Tiempos</h4>
-                    <p>Mínimo: 5 minutos</p>
-                    <p>Máximo: 120 minutos</p>
-                    <p>Promedio: 35 minutos</p>
-                </div>
-                <div class="result-card">
-                    <h4>🕒 Patrones Temporales</h4>
-                    <p>Horas pico: +40% tiempo</p>
-                    <p>Fin de semana: -20% tiempo</p>
-                    <p>Noche: -30% tiempo</p>
-                </div>
-                <div class="result-card">
-                    <h4>🌧️ Efecto Clima</h4>
-                    <p>Lluvia intensa: +25% tiempo</p>
-                    <p>Temperatura extrema: +15% tiempo</p>
-                </div>
-            </div>
-
-            <div class="visualization">
-                <h4>Distribución de Tiempos de Viaje</h4>
-                <div class="chart-container">
-                    <canvas id="timeDistributionChart"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <!-- Fase 3 -->
-        <div class="phase phase-3">
-            <div class="phase-header">
-                <div class="phase-icon">🛠️</div>
-                <h2>FASE 3: PREPARACIÓN DE DATOS</h2>
-            </div>
-
-            <h3>Pipeline de Preparación</h3>
-            <ol>
-                <li>🧹 Limpieza: Eliminar duplicados y valores nulos</li>
-                <li>🎯 Ingeniería: Crear 15 características nuevas</li>
-                <li>⚖️ Escalado: Estandarizar variables numéricas</li>
-                <li>🏷️ Codificación: Transformar variables categóricas</li>
-                <li>📊 Selección: Elegir 7 características más relevantes</li>
-            </ol>
-
-            <h3>Características Finales Seleccionadas</h3>
-            <div class="feature-importance">
-                <div>
-                    <p>distancia_km</p>
-                    <div class="feature-bar">
-                        <div class="feature-fill" style="width: 95%"></div>
-                        <div class="feature-label">95%</div>
-                    </div>
-                </div>
-                <div>
-                    <p>nivel_trafico</p>
-                    <div class="feature-bar">
-                        <div class="feature-fill" style="width: 88%"></div>
-                        <div class="feature-label">88%</div>
-                    </div>
-                </div>
-                <div>
-                    <p>hora_dia</p>
-                    <div class="feature-bar">
-                        <div class="feature-fill" style="width: 82%"></div>
-                        <div class="feature-label">82%</div>
-                    </div>
-                </div>
-                <div>
-                    <p>nivel_lluvia</p>
-                    <div class="feature-bar">
-                        <div class="feature-fill" style="width: 75%"></div>
-                        <div class="feature-label">75%</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="metrics-grid">
-                <div class="metric-card">
-                    <h4>📈 Entrenamiento</h4>
-                    <p>1,600 muestras (80%)</p>
-                </div>
-                <div class="metric-card">
-                    <h4>📊 Prueba</h4>
-                    <p>400 muestras (20%)</p>
-                </div>
-                <div class="metric-card">
-                    <h4>💾 Dimensionalidad</h4>
-                    <p>7 características × 2,000 muestras</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Fase 4 -->
-        <div class="phase phase-4">
-            <div class="phase-header">
-                <div class="phase-icon">🧠</div>
-                <h2>FASE 4: MODELADO - ARQUITECTURA MLP</h2>
-            </div>
-
-            <h3>Arquitectura de la Red Neuronal</h3>
             <div class="architecture">
-                <div class="layer">🎯 CAPA DE ENTRADA: 7 neuronas (características)</div>
-                <div class="layer">📥 → BatchNormalization()</div>
-                <div class="layer">📥 → Dropout(0.3) - 30% de neuronas desactivadas</div>
-                <div class="layer">🎯 CAPA OCULTA 1: 128 neuronas + ReLU</div>
-                <div class="layer">🧠 → BatchNormalization()</div>
-                <div class="layer">🧠 → Dropout(0.3)</div>
-                <div class="layer">🎯 CAPA OCULTA 2: 64 neuronas + ReLU</div>
-                <div class="layer">🧠 → BatchNormalization()</div>
-                <div class="layer">🧠 → Dropout(0.3)</div>
-                <div class="layer">🎯 CAPA OCULTA 3: 32 neuronas + ReLU</div>
-                <div class="layer">🧠 → BatchNormalization()</div>
-                <div class="layer">🧠 → Dropout(0.3)</div>
-                <div class="layer">🎯 CAPA DE SALIDA: 1 neurona + Linear (Regresión)</div>
-            </div>
+                <div class="model-visual" id="modelVisual">
+                    <!-- Las capas se generarán con JavaScript -->
+                </div>
 
-            <h3>Configuración de Entrenamiento</h3>
+                <div class="grid">
+                    <div class="card">
+                        <h3><i class="fas fa-layer-group"></i> Capas Convolucionales</h3>
+                        <p><strong>3 bloques convolucionales</strong> con activación ReLU, normalización por lotes y
+                            capas de pooling para extracción de características.</p>
+                        <p><strong>Filtros:</strong> 32 → 64 → 128</p>
+                    </div>
+
+                    <div class="card">
+                        <h3><i class="fas fa-project-diagram"></i> Capas Densas</h3>
+                        <p>Dos capas fully connected con dropout para prevenir overfitting y una capa de salida con
+                            activación sigmoid para clasificación binaria.</p>
+                    </div>
+
+                    <div class="card">
+                        <h3><i class="fas fa-tachometer-alt"></i> Optimización</h3>
+                        <p>Optimizador Adam con learning rate de 0.001, función de pérdida binary crossentropy y
+                            métricas de precisión, recall y AUC.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2><i class="fas fa-chart-bar"></i> Métricas de Rendimiento</h2>
+
+            <div class="grid">
+                <div class="card">
+                    <h3><i class="fas fa-crosshairs"></i> Precisión</h3>
+                    <div class="metric">
+                        <span>Validación:</span>
+                        <span class="metric-value">97.49%</span>
+                    </div>
+                    <div class="metric">
+                        <span>Prueba:</span>
+                        <span class="metric-value">96.80%</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-search"></i> Recall</h3>
+                    <div class="metric">
+                        <span>Validación:</span>
+                        <span class="metric-value">97.30%</span>
+                    </div>
+                    <div class="metric">
+                        <span>Prueba:</span>
+                        <span class="metric-value">96.50%</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-balance-scale"></i> F1-Score</h3>
+                    <div class="metric">
+                        <span>Validación:</span>
+                        <span class="metric-value">97.39%</span>
+                    </div>
+                    <div class="metric">
+                        <span>Prueba:</span>
+                        <span class="metric-value">96.65%</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-chart-area"></i> AUC-ROC</h3>
+                    <div class="metric">
+                        <span>Validación:</span>
+                        <span class="metric-value">0.9958</span>
+                    </div>
+                    <div class="metric">
+                        <span>Prueba:</span>
+                        <span class="metric-value">0.9942</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2><i class="fas fa-code-branch"></i> Proceso de Desarrollo - 6 Fases</h2>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3><span class="phase-number">1</span> Fase 1: Entendimiento del Negocio</h3>
+                        <p>Definición del problema, objetivos y criterios de éxito. Análisis de requerimientos para la
+                            detección de fraude en transacciones.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3><span class="phase-number">2</span> Fase 2: Preparación de Datos</h3>
+                        <p>Recolección y preprocesamiento del dataset MNIST. Balanceo de clases y transformación de
+                            imágenes a formato compatible con CNN.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3><span class="phase-number">3</span> Fase 3: Modelado</h3>
+                        <p>Diseño y entrenamiento de la arquitectura CNN. Optimización de hiperparámetros y validación
+                            del modelo.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3><span class="phase-number">4</span> Fase 4: Evaluación</h3>
+                        <p>Análisis de métricas de rendimiento y comparación con criterios de éxito. Validación en
+                            conjunto de prueba.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3><span class="phase-number">5</span> Fase 5: Métricas y KPIs</h3>
+                        <p>Evaluación exhaustiva del modelo contra criterios de negocio. Análisis de impacto económico y
+                            ROI del sistema.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3><span class="phase-number">6</span> Fase 6: Despliegue</h3>
+                        <p>Implementación del sistema de detección en tiempo real con interfaz para subida de imágenes y
+                            análisis de resultados.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2><i class="fas fa-play-circle"></i> Demostración en Tiempo Real</h2>
+            <p>Prueba nuestro sistema subiendo una imagen de transacción para detectar posibles fraudes:</p>
+
+            <div class="demo-container">
+                <div class="upload-area" id="uploadArea">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Haz clic para subir una imagen de transacción</p>
+                    <p class="small">(Formato: PNG, JPG, JPEG)</p>
+                </div>
+
+                <div class="result" id="result">
+                    <h3 id="resultTitle">Resultado del Análisis</h3>
+                    <div class="probability-bar">
+                        <div class="probability-fill" id="probabilityFill"></div>
+                    </div>
+                    <p id="probabilityText">Probabilidad de fraude: <span id="probabilityValue">0%</span></p>
+                    <p id="recommendation">Recomendación: </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2><i class="fas fa-tools"></i> Tecnologías Utilizadas</h2>
+
             <div class="tech-stack">
-                <span class="tech-tag">Adam(lr=0.001)</span>
-                <span class="tech-tag">loss='mse'</span>
-                <span class="tech-tag">batch_size=32</span>
-                <span class="tech-tag">epochs=150</span>
-                <span class="tech-tag">EarlyStopping</span>
-                <span class="tech-tag">ReduceLROnPlateau</span>
+                <div class="tech-item">TensorFlow / Keras</div>
+                <div class="tech-item">Python</div>
+                <div class="tech-item">Google Colab</div>
+                <div class="tech-item">NumPy</div>
+                <div class="tech-item">Pandas</div>
+                <div class="tech-item">Scikit-learn</div>
+                <div class="tech-item">Matplotlib</div>
+                <div class="tech-item">OpenCV</div>
             </div>
 
-            <div class="visualization">
-                <h4>Evolución del Entrenamiento</h4>
-                <div class="chart-container">
-                    <canvas id="trainingChart"></canvas>
+            <div class="grid">
+                <div class="card">
+                    <h3><i class="fas fa-database"></i> Dataset</h3>
+                    <p>Utilizamos MNIST dataset adaptado, donde los dígitos 0-4 representan transacciones legítimas y
+                        5-9 transacciones fraudulentas.</p>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-server"></i> Infraestructura</h3>
+                    <p>Entrenamiento en Google Colab con GPU Tesla T4. Modelo optimizado para inferencia en tiempo real
+                        con baja latencia.</p>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-filter"></i> Especificaciones CNN</h3>
+                    <p><strong>3 capas convolucionales</strong> con 32, 64 y 128 filtros respectivamente. <strong>224
+                            filtros totales</strong> para extracción de características.</p>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Fase 5 -->
-        <div class="phase phase-5">
-            <div class="phase-header">
-                <div class="phase-icon">📊</div>
-                <h2>FASE 5: EVALUACIÓN - MÉTRICAS FINALES</h2>
-            </div>
-
-            <h3>Resultados de Predicción</h3>
-            <div class="metrics-grid">
-                <div class="metric-card">
-                    <h4>MAE</h4>
-                    <p>2.45 minutos</p>
-                    <div class="progress-bar">
-                        <div class="progress-fill mae"></div>
-                    </div>
-                    <p>92% de precisión</p>
-                </div>
-                <div class="metric-card">
-                    <h4>RMSE</h4>
-                    <p>3.80 minutos</p>
-                    <div class="progress-bar">
-                        <div class="progress-fill rmse"></div>
-                    </div>
-                    <p>88% de precisión</p>
-                </div>
-                <div class="metric-card">
-                    <h4>R²</h4>
-                    <p>0.89</p>
-                    <div class="progress-bar">
-                        <div class="progress-fill r2"></div>
-                    </div>
-                    <p>89% varianza explicada</p>
-                </div>
-                <div class="metric-card">
-                    <h4>MAPE</h4>
-                    <p>8.20%</p>
-                    <div class="progress-bar">
-                        <div class="progress-fill mape"></div>
-                    </div>
-                    <p>91.8% de precisión</p>
-                </div>
-            </div>
-
-            <h3>Análisis de Errores</h3>
-            <div class="results-grid">
-                <div class="result-card">
-                    <h4>📈 Distribución de Precisión</h4>
-                    <p>Dentro del 5%: 45.2%</p>
-                    <p>Dentro del 10%: 78.5%</p>
-                    <p>Dentro del 15%: 92.1%</p>
-                </div>
-                <div class="result-card">
-                    <h4>📊 Estadísticas de Error</h4>
-                    <p>Error promedio: -0.15 min</p>
-                    <p>Desviación estándar: 3.20 min</p>
-                    <p>Error máximo: 15.30 min</p>
-                </div>
-            </div>
-
-            <div class="visualization">
-                <h4>Predicciones vs Valores Reales</h4>
-                <div class="chart-container">
-                    <canvas id="predictionChart"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <!-- Fase 6 -->
-        <div class="phase phase-6">
-            <div class="phase-header">
-                <div class="phase-icon">🚀</div>
-                <h2>FASE 6: DESPLIEGUE - SISTEMA EN PRODUCCIÓN</h2>
-            </div>
-
-            <h3>Arquitectura del Sistema</h3>
-            <div class="architecture">
-                <div class="layer">🎯 ENTRADA: Datos del usuario en tiempo real</div>
-                <div class="layer">📥 • Distancia, Hora, Día, Clima, Tráfico, Temperatura</div>
-                <div class="layer">🧠 PROCESAMIENTO: Modelo MLP entrenado</div>
-                <div class="layer">⚡ • Preprocesamiento de características</div>
-                <div class="layer">⚡ • Predicción del tiempo de viaje</div>
-                <div class="layer">⚡ • Generación de recomendaciones</div>
-                <div class="layer">📊 SALIDA: Resultados y recomendaciones</div>
-                <div class="layer">📢 • Tiempo estimado de viaje</div>
-                <div class="layer">📢 • Velocidad promedio estimada</div>
-                <div class="layer">📢 • Recomendaciones personalizadas</div>
-                <div class="layer">📢 • Hora estimada de llegada</div>
-            </div>
-
-            <h3>Ejemplo Real de Predicción</h3>
-            <div class="prediction-example">
-                <h4>🚗 Caso Real: Viaje con Condiciones Adversas</h4>
-                <table class="data-table">
-                    <tr>
-                        <th>Parámetro</th>
-                        <th>Valor</th>
-                    </tr>
-                    <tr>
-                        <td>📏 Distancia</td>
-                        <td>20.0 km</td>
-                    </tr>
-                    <tr>
-                        <td>🕒 Hora de salida</td>
-                        <td>12:00</td>
-                    </tr>
-                    <tr>
-                        <td>📅 Día</td>
-                        <td>Jueves</td>
-                    </tr>
-                    <tr>
-                        <td>🌧️ Lluvia</td>
-                        <td>Intensa (1.0)</td>
-                    </tr>
-                    <tr>
-                        <td>🚦 Tráfico</td>
-                        <td>Muy congestionado (1.0)</td>
-                    </tr>
-                    <tr>
-                        <td>🌡️ Temperatura</td>
-                        <td>15°C</td>
-                    </tr>
-                </table>
-                
-                <div style="background: #4CAF50; color: white; padding: 15px; border-radius: 10px; margin: 15px 0;">
-                    <h4>🎯 RESULTADO DE PREDICCIÓN</h4>
-                    <p><strong>Tiempo estimado: 90.5 minutos</strong></p>
-                    <p>Velocidad promedio: 13.3 km/h</p>
-                    <p>Hora estimada de llegada: 02:32</p>
-                </div>
-
-                <h4>💡 RECOMENDACIONES GENERADAS:</h4>
-                <ul>
-                    <li>🚗 Tráfico MUY intenso - Considere posponer el viaje</li>
-                    <li>⏰ Salga con 20-30 minutos de anticipación</li>
-                    <li>🌧️ Lluvia intensa - Extreme precauciones</li>
-                    <li>🚦 Congestión severa - Evite horas pico si es posible</li>
-                </ul>
-            </div>
-
-            <div class="visualization">
-                <h4>Distribución de Errores en Producción</h4>
-                <div class="chart-container">
-                    <canvas id="errorDistributionChart"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="header" style="margin-top: 40px;">
-            <h2>🎉 PROYECTO EXITOSO!</h2>
-            <p>Sistema de predicción de rutas implementado con éxito usando Redes Neuronales MLP</p>
-            <p><strong>Precisión del 91.8% en predicción de tiempos de viaje</strong></p>
-            <h3 style="color: #4CAF50; margin-top: 20px;">¡LISTO PARA INTEGRACIÓN EN APLICACIONES!</h3>
-        </div>
+        <footer>
+            <p>Proyecto desarrollado por el equipo <strong>Composers</strong> - 2024</p>
+            <p>Sistema de Detección de Fraude con Redes Neuronales Convolucionales - 6 Fases CRISP-DM</p>
+        </footer>
     </div>
 
     <script>
-        // Animación simple para las barras de progreso
-        document.addEventListener('DOMContentLoaded', function() {
-            const progressBars = document.querySelectorAll('.progress-fill');
-            progressBars.forEach(bar => {
-                const width = bar.style.width;
-                bar.style.width = '0%';
+        // Visualización de la arquitectura del modelo
+        document.addEventListener('DOMContentLoaded', function () {
+            const modelVisual = document.getElementById('modelVisual');
+            const layers = [
+                { name: "Input 32x32", width: 80, top: 20, color: "#3498db" },
+                { name: "Conv2D 32", width: 70, top: 70, color: "#2980b9" },
+                { name: "BatchNorm", width: 60, top: 120, color: "#1abc9c" },
+                { name: "MaxPooling", width: 50, top: 170, color: "#16a085" },
+                { name: "Conv2D 64", width: 70, top: 220, color: "#9b59b6" },
+                { name: "BatchNorm", width: 60, top: 270, color: "#8e44ad" },
+                { name: "MaxPooling", width: 50, top: 320, color: "#34495e" },
+                { name: "Conv2D 128", width: 70, top: 370, color: "#e74c3c" },
+                { name: "GlobalAvgPool", width: 60, top: 420, color: "#c0392b" },
+                { name: "Dense 128", width: 70, top: 470, color: "#f39c12" },
+                { name: "Dense 64", width: 60, top: 520, color: "#d35400" },
+                { name: "Output", width: 50, top: 570, color: "#2ecc71" }
+            ];
+
+            layers.forEach(layer => {
+                const layerEl = document.createElement('div');
+                layerEl.className = 'layer';
+                layerEl.textContent = layer.name;
+                layerEl.style.width = `${layer.width}%`;
+                layerEl.style.top = `${layer.top}px`;
+                layerEl.style.left = `${(100 - layer.width) / 2}%`;
+                layerEl.style.backgroundColor = layer.color;
+                modelVisual.appendChild(layerEl);
+            });
+
+            // Simulación de detección de fraude
+            const uploadArea = document.getElementById('uploadArea');
+            const result = document.getElementById('result');
+            const probabilityFill = document.getElementById('probabilityFill');
+            const probabilityValue = document.getElementById('probabilityValue');
+            const resultTitle = document.getElementById('resultTitle');
+            const recommendation = document.getElementById('recommendation');
+
+            uploadArea.addEventListener('click', function () {
+                // Simular análisis de imagen (en un caso real, aquí se enviaría la imagen al modelo)
+                const randomProbability = Math.random();
+
+                // Mostrar resultado
+                result.style.display = 'block';
+
+                // Animación de la barra de probabilidad
                 setTimeout(() => {
-                    bar.style.width = width;
+                    probabilityFill.style.width = `${randomProbability * 100}%`;
+                    probabilityValue.textContent = `${(randomProbability * 100).toFixed(2)}%`;
+
+                    // Determinar si es fraude o no
+                    if (randomProbability > 0.5) {
+                        result.className = 'result fraud';
+                        resultTitle.textContent = '🚨 POSIBLE FRAUDE DETECTADO';
+                        recommendation.textContent = 'Recomendación: BLOQUEAR TRANSACCIÓN y notificar al equipo de seguridad';
+                    } else {
+                        result.className = 'result legit';
+                        resultTitle.textContent = '✅ TRANSACCIÓN LEGÍTIMA';
+                        recommendation.textContent = 'Recomendación: PROCEDER CON LA TRANSACCIÓN normalmente';
+                    }
                 }, 500);
             });
 
-            // Inicializar gráficos
-            initializeCharts();
+            // Efectos de animación
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.classList.add('floating');
+            });
+
+            // Efecto de pulso en el área de subida
+            uploadArea.classList.add('pulse');
         });
-
-        function initializeCharts() {
-            // Gráfico de distribución de tiempos
-            const timeCtx = document.getElementById('timeDistributionChart').getContext('2d');
-            new Chart(timeCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['5-15', '15-25', '25-35', '35-45', '45-55', '55-65', '65+'],
-                    datasets: [{
-                        label: 'Frecuencia de Tiempos de Viaje',
-                        data: [120, 350, 480, 420, 280, 180, 170],
-                        backgroundColor: 'rgba(76, 175, 80, 0.6)',
-                        borderColor: 'rgba(76, 175, 80, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Frecuencia'
-                            }
-                        },
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Tiempo de Viaje (minutos)'
-                            }
-                        }
-                    }
-                }
-            });
-
-            // Gráfico de entrenamiento
-            const trainingCtx = document.getElementById('trainingChart').getContext('2d');
-            new Chart(trainingCtx, {
-                type: 'line',
-                data: {
-                    labels: Array.from({length: 50}, (_, i) => i + 1),
-                    datasets: [
-                        {
-                            label: 'Pérdida Entrenamiento',
-                            data: Array.from({length: 50}, (_, i) => 45 - (i * 0.8) + Math.random() * 5),
-                            borderColor: 'rgba(255, 99, 132, 1)',
-                            backgroundColor: 'rgba(255, 99, 132, 0.1)',
-                            tension: 0.4
-                        },
-                        {
-                            label: 'Pérdida Validación',
-                            data: Array.from({length: 50}, (_, i) => 48 - (i * 0.7) + Math.random() * 6),
-                            borderColor: 'rgba(54, 162, 235, 1)',
-                            backgroundColor: 'rgba(54, 162, 235, 0.1)',
-                            tension: 0.4
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Pérdida (MSE)'
-                            }
-                        },
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Época'
-                            }
-                        }
-                    }
-                }
-            });
-
-            // Gráfico de predicciones vs reales
-            const predictionCtx = document.getElementById('predictionChart').getContext('2d');
-            const realData = Array.from({length: 100}, () => Math.random() * 100 + 10);
-            const predData = realData.map(val => val + (Math.random() - 0.5) * 10);
-            
-            new Chart(predictionCtx, {
-                type: 'scatter',
-                data: {
-                    datasets: [{
-                        label: 'Predicciones vs Reales',
-                        data: realData.map((val, i) => ({x: val, y: predData[i]})),
-                        backgroundColor: 'rgba(76, 175, 80, 0.6)',
-                        borderColor: 'rgba(76, 175, 80, 1)',
-                        pointRadius: 5
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Valores Reales (minutos)'
-                            }
-                        },
-                        y: {
-                            title: {
-                                display: true,
-                                text: 'Predicciones (minutos)'
-                            }
-                        }
-                    },
-                    plugins: {
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return `Real: ${context.parsed.x.toFixed(1)} min, Pred: ${context.parsed.y.toFixed(1)} min`;
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-
-            // Gráfico de distribución de errores
-            const errorCtx = document.getElementById('errorDistributionChart').getContext('2d');
-            new Chart(errorCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['<-10', '-10 a -5', '-5 a 0', '0 a 5', '5 a 10', '10+'],
-                    datasets: [{
-                        label: 'Distribución de Errores (minutos)',
-                        data: [45, 120, 185, 210, 135, 105],
-                        backgroundColor: 'rgba(255, 159, 64, 0.6)',
-                        borderColor: 'rgba(255, 159, 64, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Frecuencia'
-                            }
-                        },
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Rango de Error (minutos)'
-                            }
-                        }
-                    }
-                }
-            });
-        }
     </script>
 </body>
+
 </html>
